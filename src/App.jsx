@@ -1,10 +1,11 @@
+import Homepage from "./homepage"
 
 function App() {
 
 
   return (
     <>
-     <h1>COMPANY CONSULTING PLATFORM</h1>
+     <Homepage/>
     </>
   )
 }
