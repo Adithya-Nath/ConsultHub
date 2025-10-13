@@ -80,7 +80,19 @@ function Homepage() {
                     </div>
                 </section>
             </div>
-        </div>
+            <div class="card text-center">
+  <div class="card-header">
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">The Company Consulting Platform</h5>
+    <p class="card-text">ConsultHub is an online platform designed to connect users with a wide array of consulting companies. It streamlines the process of finding and evaluating consulting services by providing a centralized directory with detailed company profiles and authentic user feedback. The platform aims to create a transparent and efficient marketplace for clients and consulting firms alike, fostering a trustworthy and dynamic digital community.</p>
+    <a href="#" class="btn btn-primary">Find Companies</a>
+  </div>
+  <div class="card-footer text-body-secondary p-3 mb-2 bg-dark-subtle text-dark-emphasis">
+    @ConsultHub2025
+  </div>
+</div>
+</div>
     );
 }
 
