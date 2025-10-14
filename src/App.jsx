@@ -1,12 +1,15 @@
-import Register from './register'
+import Register from "./register";
+import Homepage from "./homepage";
+import SidebarNavbar from "./SidebarNavbar";
+
 function App() {
-
-
   return (
     <>
-     <Register/>
+      <Register />
+      <SidebarNavbar />
+      <Homepage />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
