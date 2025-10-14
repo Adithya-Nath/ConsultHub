@@ -1,10 +1,12 @@
+import SidebarNavbar from "./SidebarNavbar";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
 
 
   return (
     <>
-     <h1>COMPANY CONSULTING PLATFORM</h1>
+    <SidebarNavbar />
     </>
   )
 }
