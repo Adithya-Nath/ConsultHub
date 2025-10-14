@@ -1,6 +1,3 @@
-import React from 'react';
-
-
 function Homepage() {
     return (
         <div>
@@ -9,7 +6,7 @@ function Homepage() {
                 <div className="container">
                     <h1 className="display-4 fw-bold text-primary">Welcome to ConsultHub</h1>
                     <p className="lead my-4">
-                   ConsultHub is a comprehensive online platform that connects users with a wide array of consulting companies. Search, compare, and make informed decisions based on detailed profiles and authentic peer reviews.
+                        ConsultHub is a comprehensive online platform that connects users with a wide array of consulting companies. Search, compare, and make informed decisions based on detailed profiles and authentic peer reviews.
                     </p>
                     <div className="input-group w-75 mx-auto">
                         <input type="search" placeholder="Search by service, company name, or keyword" className="form-control" />
@@ -81,18 +78,18 @@ function Homepage() {
                 </section>
             </div>
             <div class="card text-center">
-  <div class="card-header">
-  </div>
-  <div class="card-body">
-    <h5 class="card-title">The Company Consulting Platform</h5>
-    <p class="card-text">ConsultHub is an online platform designed to connect users with a wide array of consulting companies. It streamlines the process of finding and evaluating consulting services by providing a centralized directory with detailed company profiles and authentic user feedback. The platform aims to create a transparent and efficient marketplace for clients and consulting firms alike, fostering a trustworthy and dynamic digital community.</p>
-    <a href="#" class="btn btn-primary">Find Companies</a>
-  </div>
-  <div class="card-footer text-body-secondary p-3 mb-2 bg-dark-subtle text-dark-emphasis">
-    @ConsultHub2025
-  </div>
-</div>
-</div>
+                <div class="card-header">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">The Company Consulting Platform</h5>
+                    <p class="card-text">ConsultHub is an online platform designed to connect users with a wide array of consulting companies. It streamlines the process of finding and evaluating consulting services by providing a centralized directory with detailed company profiles and authentic user feedback. The platform aims to create a transparent and efficient marketplace for clients and consulting firms alike, fostering a trustworthy and dynamic digital community.</p>
+                    <a href="#" class="btn btn-primary">Find Companies</a>
+                </div>
+                <div class="card-footer text-body-secondary p-3 mb-2 bg-dark-subtle text-dark-emphasis">
+                    @ConsultHub2025
+                </div>
+            </div>
+        </div>
     );
 }
 

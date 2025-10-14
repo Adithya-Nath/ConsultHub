@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button, Offcanvas, Nav } from "react-bootstrap";
-import { FaBars, FaPlus, FaEdit,  FaSignOutAlt } from "react-icons/fa";
+import { FaBars, FaPlus, FaEdit, FaSignOutAlt } from "react-icons/fa";
 
 export default function SidebarNavbar() {
   const [showSidebar, setShowSidebar] = useState(false);
 
   return (
     <>
-       <Button
+      <Button
         style={{
           backgroundColor: "#0b56c7ff",
           border: "none",
@@ -26,10 +26,10 @@ export default function SidebarNavbar() {
         show={showSidebar}
         onHide={() => setShowSidebar(false)}
         placement="start"
-        //style={{ backgroundColor: "#1767dfff", color: "white" }
+      //style={{ backgroundColor: "#1767dfff", color: "white" }
       >
         <Offcanvas.Header closeButton closeVariant="white">
-          <Offcanvas.Title style={{  color: "#1767dfff" }}>Company Actions</Offcanvas.Title>
+          <Offcanvas.Title style={{ color: "#1767dfff" }}>Company Actions</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body style={{ backgroundColor: "#1767dfff" }}>
           <Nav className="flex-column">
