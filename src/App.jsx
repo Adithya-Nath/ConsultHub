@@ -1,11 +1,12 @@
 import Homepage from "./homepage"
+import SidebarNavbar from "./SidebarNavbar";
 
 function App() {
 
-
   return (
     <>
-     <Homepage/>
+      <Homepage />
+      <SidebarNavbar />
     </>
   )
 }
