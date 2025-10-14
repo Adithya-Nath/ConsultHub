@@ -1,4 +1,3 @@
-// src/components/SidebarNavbar.jsx
 import React, { useState } from "react";
 import { Button, Offcanvas, Nav } from "react-bootstrap";
 import { FaBars, FaPlus, FaEdit,  FaSignOutAlt } from "react-icons/fa";
@@ -8,10 +7,9 @@ export default function SidebarNavbar() {
 
   return (
     <>
-      {/* Hamburger button styled */}
-      <Button
+       <Button
         style={{
-          backgroundColor: "#0b56c7ff", // navy blue
+          backgroundColor: "#0b56c7ff",
           border: "none",
           color: "white",
           display: "flex",
