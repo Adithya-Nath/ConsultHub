@@ -1,12 +1,15 @@
+import Register from "./register";
+import Homepage from "./homepage";
+import SidebarNavbar from "./SidebarNavbar";
 
 function App() {
-
-
   return (
     <>
-     <h1>COMPANY CONSULTING PLATFORM</h1>
+      <Register />
+      <SidebarNavbar />
+      <Homepage />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
