@@ -14,7 +14,7 @@ export default function SidebarNavbar() {
           color: "white",
           display: "flex",
           alignItems: "center",
-          gap: "8px"
+          gap: "8px",
         }}
         className="m-2"
         onClick={() => setShowSidebar(true)}
@@ -26,10 +26,12 @@ export default function SidebarNavbar() {
         show={showSidebar}
         onHide={() => setShowSidebar(false)}
         placement="start"
-      //style={{ backgroundColor: "#1767dfff", color: "white" }
+        //style={{ backgroundColor: "#1767dfff", color: "white" }
       >
         <Offcanvas.Header closeButton closeVariant="white">
-          <Offcanvas.Title style={{ color: "#1767dfff" }}>Company Actions</Offcanvas.Title>
+          <Offcanvas.Title style={{ color: "#1767dfff" }}>
+            Company Actions
+          </Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body style={{ backgroundColor: "#1767dfff" }}>
           <Nav className="flex-column">
@@ -39,7 +41,7 @@ export default function SidebarNavbar() {
                 color: "white",
                 display: "flex",
                 alignItems: "center",
-                gap: "10px"
+                gap: "10px",
               }}
             >
               <FaPlus /> Register Company
@@ -50,7 +52,7 @@ export default function SidebarNavbar() {
                 color: "white",
                 display: "flex",
                 alignItems: "center",
-                gap: "10px"
+                gap: "10px",
               }}
             >
               <FaEdit /> Update Company Details
@@ -63,7 +65,7 @@ export default function SidebarNavbar() {
                 display: "flex",
                 alignItems: "center",
                 gap: "10px",
-                marginTop: "auto"
+                marginTop: "auto",
               }}
             >
               <FaSignOutAlt /> Logout
@@ -74,5 +76,3 @@ export default function SidebarNavbar() {
     </>
   );
 }
-
-
