@@ -1,14 +1,44 @@
-import Homepage from "./homepage"
+import Homepage from "./homepage";
 import SidebarNavbar from "./SidebarNavbar";
 
-function App() {
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import LoginPage from "./loginpage";
+import CreateAccount from "./createnewaccount";
 
+function App() {
   return (
     <>
-      <SidebarNavbar />
-      <Homepage />
+      <Router>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <SidebarNavbar />
+                <Homepage />
+              </>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <>
+                <LoginPage />
+              </>
+            }
+          />
+          <Route
+            path="/create-account"
+            element={
+              <>
+                <CreateAccount />
+              </>
+            }
+          />
+        </Routes>
+      </Router>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
