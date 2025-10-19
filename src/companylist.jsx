@@ -44,6 +44,8 @@ function Companylist() {
       <Searchbar searchTerm={searchTerm} onSearch={handleSearch} />
       
       <h2 className="text-center mb-4">OUR COMPANIES</h2>
+      
+      {filteredCompanies.length>0 ? (
       <ul className="list-group">
 
         {filteredCompanies.map(company => (
@@ -61,6 +63,13 @@ function Companylist() {
           </li>
         ))}
       </ul>
+      ):(
+        <div className="text-center p-5 border rounded bg-light">
+          <p className="lead text-muted">
+            Sorry, no companies found matching "{searchTerm}".
+          </p>
+        </div>
+      )}
     </div>
   );
 }
