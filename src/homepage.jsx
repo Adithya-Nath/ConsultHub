@@ -1,10 +1,20 @@
-import React from 'react';
-
+import React, { useState } from 'react'; 
+import { useNavigate } from 'react-router-dom'; 
 
 function Homepage() {
+
+    const [searchTerm, setSearchTerm] = useState("");
+    
+    const navigate = useNavigate();
+
+
+    const handleSearch = () => {
+        
+        navigate(`/companylist?q=${searchTerm}`);
+    };
     return (
         <div>
-            {/* Hero Section */}
+
             <div className="container-fluid bg-light text-dark p-5 text-center">
                 <div className="container">
                     <h1 className="display-4 fw-bold text-primary">Welcome to ConsultHub</h1>
@@ -12,18 +22,19 @@ function Homepage() {
                    ConsultHub is a comprehensive online platform that connects users with a wide array of consulting companies. Search, compare, and make informed decisions based on detailed profiles and authentic peer reviews.
                     </p>
                     <div className="input-group w-75 mx-auto">
-                        <input type="search" placeholder="Search by service, company name, or keyword" className="form-control" />
-                        <button className="btn btn-primary">Search</button>
+                        <input type="search" placeholder="Search by service, company name, or keyword" className="form-control" value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}/>
+                        <button className="btn btn-primary" onClick={handleSearch}>Search</button>
                     </div>
                 </div>
             </div>
 
             <div className="container my-5">
-                {/* How It Works Section */}
+
                 <section className="how-it-works mb-5">
                     <h2 className="text-center display-6 fw-bold mb-4">A Streamlined Process for Finding Experts and Growing Your Business</h2>
                     <div className="row g-4">
-                        {/* For Clients */}
+
                         <div className="col-lg-6">
                             <div className="card h-100">
                                 <div className="card-body">
@@ -37,7 +48,6 @@ function Homepage() {
                             </div>
                         </div>
 
-                        {/* For Companies */}
                         <div className="col-lg-6">
                             <div className="card h-100">
                                 <div className="card-body">
@@ -53,7 +63,6 @@ function Homepage() {
                     </div>
                 </section>
 
-                {/* Video Section - NEW */}
                 <section className="video-section text-center mb-5">
                     <h2 className="display-6 fw-bold mb-4">See ConsultHub in Action</h2>
                     <div className="col-lg-8 mx-auto">
@@ -65,7 +74,6 @@ function Homepage() {
                     </div>
                 </section>
 
-                {/* Why Join Section */}
                 <section className="why-join text-center bg-light p-5 rounded">
                     <h2 className="display-6 fw-bold mb-4">Why Join ConsultHub?</h2>
                     <div className="row g-4">
