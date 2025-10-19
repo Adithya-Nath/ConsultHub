@@ -1,4 +1,3 @@
-
 const STORAGE_KEY = "companyReviews";
 
 
@@ -25,3 +24,4 @@ export const addReviewToStorage = (companyId, newReview) => {
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedAllReviews));
 };
+

@@ -26,3 +26,4 @@ const StarRating = ({ rating = 0 }) => {
 };
 
 export default StarRating;
+
