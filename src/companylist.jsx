@@ -6,16 +6,16 @@ import StarRating from './starRating';
 import ViewDetailsCard from './viewDetailsCard'; 
 
 const BASE_COMPANY_DATA = [
-  { id: 1, name: 'Smart Solar' },
-  { id: 2, name: 'Tony and the guy' },
-  { id: 3, name: 'OLX' },
-  { id: 4, name: 'Myntra' },
-  { id: 5, name: 'Amazon' },
-  { id: 6, name: 'Tata Sky' },
-  { id: 7, name: 'TVS' },
-  { id: 8, name: 'Zomato' },
-  { id: 9, name: 'Swiggy' },
-  { id: 10, name: 'Byjus' },
+{ id: 1, name: 'Smart Solar', description: 'Your trusted partner for sustainable energy. We offer end-to-end solar solutions, from consultation and installation to maintenance.', gmail: 'info@smartsolar.com', phoneNumber: 7596324895 },
+{ id: 2, name: 'Tony and the guy', description: 'Premium hair salon and styling services.', gmail: 'info@tonyandguy.com', phoneNumber: 9876543210 },
+{ id: 3, name: 'OLX', description: 'Online marketplace for buying and selling used goods.', gmail: 'support@olx.in', phoneNumber: 9876512345 },
+{ id: 4, name: 'Myntra', description: 'Your one-stop shop for fashion and lifestyle products.', gmail: 'care@myntra.com', phoneNumber: 8061561999 },
+{ id: 5, name: 'Amazon', description: 'Global e-commerce leader for electronics, books, and more.', gmail: 'cs-reply@amazon.in', phoneNumber: 180030009009 },
+{ id: 6, name: 'Tata Sky', description: 'Leading DTH service provider with a wide range of channels.', gmail: 'help@tatasky.com', phoneNumber: 18002086633 },
+{ id: 7, name: 'TVS', description: 'Manufacturer of motorcycles, scooters, and three-wheelers.', gmail: 'customercare@tvsmotor.com', phoneNumber: 18002587111 },
+{ id: 8, name: 'Zomato', description: 'Find restaurants and order food delivery online.', gmail: 'info@zomato.com', phoneNumber: 9998887776 },
+{ id: 9, name: 'Swiggy', description: 'Fast food delivery from your favorite local restaurants.', gmail: 'support@swiggy.in', phoneNumber: 9998887775 },
+{ id: 10, name: 'Byjus', description: 'Online learning platform for students of all ages.', gmail: 'contact@byjus.com', phoneNumber: 9241333666 }
 ];
 
 
