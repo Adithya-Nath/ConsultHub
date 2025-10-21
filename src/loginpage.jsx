@@ -1,8 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { useAuth } from "./context/AuthContext";
 function LoginPage() {
   const navigate = useNavigate();
+  const auth = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    setError("");
+
+    const loggedInUser = auth.login(email, password);
+
+    if (loggedInUser) {
+ 
+      if (loggedInUser.role === 'admin') {
+        navigate('/admin-dashboard');
+      } else {
+        navigate('/');
+      }
+    } else {
+      setError("Invalid username or password");
+    }
+  };
 
   return (
     <div
@@ -28,16 +51,20 @@ function LoginPage() {
           Login
         </h3>
 
-        <form onSubmit={(e) => e.preventDefault()}>
+        <form onSubmit={handleLogin}>
+          {error && <div className="alert alert-danger">{error}</div>}
           <div className="mb-3">
             <label className="form-label" style={{ color: "#3265d3ff" }}>
               Username / Email ID
             </label>
             <input
-              type="text"
+              type="email" 
               className="form-control"
               placeholder="Enter username or email"
               style={{ background: "#e3f0ff", borderColor: "#b3c6e0" }}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </div>
           <div className="mb-3">
@@ -49,6 +76,9 @@ function LoginPage() {
               className="form-control"
               placeholder="Enter password"
               style={{ background: "#e3f0ff", borderColor: "#b3c6e0" }}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </div>
           <button

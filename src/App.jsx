@@ -6,11 +6,17 @@ import LoginPage from "./loginpage";
 import CreateAccount from "./createnewaccount";
 import RegisterCompany from "./registerCompany";
 import CompanyProfile from "./CompanyProfile";
+import { AuthProvider } from "./context/AuthContext";
+import AdminDashboard from "./AdminDashboard";
+import AdminSidebar from "./AdminSidebar";
+import AdminApplicationlist from "./AdminApplicationlist";
+import PaymentPage from "./PaymentPage";
 
 function App() {
   return (
     <>
       <BrowserRouter>
+      <AuthProvider>
         <Routes>
           <Route path="/companylist" element={ 
             <>
@@ -53,6 +59,15 @@ function App() {
             }
           />
           <Route
+            path="/admin-dashboard"
+            element={
+              <>
+              <AdminSidebar />
+                <AdminDashboard />
+              </>
+            }
+          />
+          <Route
             path="/company-profile"
             element={
               <>
@@ -61,7 +76,26 @@ function App() {
               </>
             }
           />
+          <Route
+            path="/application-list"
+            element={
+              <>
+                <AdminSidebar/>
+                <AdminApplicationlist />
+              </>
+            }
+          />
+          <Route
+            path="/payment-page"
+            element={
+              <>
+                <SidebarNavbar/>
+                <PaymentPage />
+              </>
+            }
+          />
         </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </>
   );

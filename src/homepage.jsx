@@ -1,47 +1,49 @@
-import { useEffect,useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { useAuth } from "./context/AuthContext";
 function Homepage() {
-    const [searchTerm, setSearchTerm] = useState("");
-    const navigate = useNavigate();
-        const [user, setUser] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
+  const { user, logout } = useAuth(); 
 
+  const handleSearch = () => {
+    navigate(`/companylist?q=${searchTerm}`);
+  };
 
-    const handleSearch = () => {
-        navigate(`/companylist?q=${searchTerm}`);
-    };
-    useEffect(() => {
-    const accountData = JSON.parse(localStorage.getItem("accountData"));
-    if (accountData) setUser(accountData);
-    }, []);
+  
 
-    const handleLogout = () => {
-    setUser(null);
-    localStorage.removeItem("accountData");
-    navigate("/login");
-    };
-    return (
-        <div>
-<div
-            className="d-flex justify-content-end align-items-center p-3"
-            style={{ position: "absolute", bottom: "768px", right: "30px", gap: "20px" }}
-            >
-            {user ? (
-                <>
-                <div className="text-end me-2">
-                    <div style={{ fontWeight: 600 }}>{user.name}</div>
-                    <div style={{ fontSize: "0.85rem" }}>{user.email}</div>
-                </div>
-                <button className="btn btn-outline-danger" onClick={handleLogout}>
-                    Logout
-                </button>
-                </>
-            ) : (
-                <button className="btn btn-outline-primary" onClick={() => navigate("/login")}>
-                Login
-                </button>
-            )}
+  return (
+    <div>
+      <div
+        className="d-flex justify-content-end align-items-center p-3"
+        style={{
+          position: 'absolute',
+          top: '20px',
+          right: '30px',
+          gap: '20px',
+          zIndex: 10,
+        }}
+      >
+        {user ? (
+          <>
+            <div className="text-end me-2">
+              <div style={{ fontWeight: 600 }}>{user.name}</div>
+              <div style={{ fontSize: '0.85rem' }}>{user.email}</div>
+              
             </div>
+            <button className="btn btn-outline-danger" onClick={logout}>
+              Logout
+            </button>
+          </>
+        ) : (
+          <button
+            className="btn btn-outline-primary"
+            onClick={() => navigate('/login')}
+          >
+            Login
+          </button>
+        )}
+      </div>
             <div className="container-fluid bg-light text-dark p-5 text-center">
                 <div className="container">
                     <h1 className="display-4 fw-bold text-primary">Welcome to ConsultHub</h1>

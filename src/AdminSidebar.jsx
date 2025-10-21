@@ -6,7 +6,7 @@ import { useAuth } from "./context/AuthContext";
 
 export default function SidebarNavbar() {
   const [showSidebar, setShowSidebar] = useState(false);
-    const { user, logout } = useAuth(); 
+  const { user, logout } = useAuth(); 
   
 
   const handleClose = () => setShowSidebar(false);
@@ -24,7 +24,7 @@ export default function SidebarNavbar() {
       <Offcanvas show={showSidebar} onHide={handleClose} placement="start">
         <Offcanvas.Header closeButton closeVariant="white">
           <Offcanvas.Title className="text-primary">
-            Company Actions
+            Admin Actions
           </Offcanvas.Title>
         </Offcanvas.Header>
 
@@ -32,37 +32,24 @@ export default function SidebarNavbar() {
           <Nav className="flex-column h-100">
             <Nav.Link
               as={Link}
-              to="/" 
+              to="/admin-dashboard" 
               onClick={handleClose} 
               className="text-white d-flex align-items-center gap-2"
             >
-              <FaEdit /> Home
+              <FaEdit />Admin Dashboard
             </Nav.Link>
             <Nav.Link
               as={Link}
-              to="/register-company"
+              to="/application-list"
               onClick={handleClose} 
               className="text-white d-flex align-items-center gap-2"
             >
-              <FaPlus /> Register Company
+              <FaPlus /> Company Register Applications
             </Nav.Link>
 
-            <Nav.Link
-              as={Link}
-              to="/company-profile" 
-              onClick={handleClose} 
-              className="text-white d-flex align-items-center gap-2"
-            >
-              <FaEdit /> My Company Profile
-            </Nav.Link>
-
-            <Nav.Link
-             onClick={logout}
-              className="text-danger d-flex align-items-center gap-2 mt-auto"
-              style={{ cursor: "pointer" }} 
-            >
-              <FaSignOutAlt /> Logout
-            </Nav.Link>
+            <button className="btn btn-danger" onClick={logout}>
+              Logout
+            </button>
           </Nav>
         </Offcanvas.Body>
       </Offcanvas>

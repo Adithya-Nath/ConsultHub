@@ -1,15 +1,52 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; 
+import { useAuth } from "./context/AuthContext";
+
+const USERS_DB_KEY = "consultHubUsers";
 
 function CreateAccount() {
+  const navigate = useNavigate(); 
+  const auth = useAuth(); 
   const [password, setPassword] = useState("");
+  
+  const [name, setName] = useState("");
+  const [industry, setIndustry] = useState("");
+  const [email, setEmail] = useState("");
+  const [contact, setContact] = useState("");
+  const [error, setError] = useState("");
 
   const generatePassword = (length = 12) => {
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
+    const chars =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
     let out = "";
     for (let i = 0; i < length; i++) {
       out += chars.charAt(Math.floor(Math.random() * chars.length));
     }
     setPassword(out);
+  };
+
+  const handleCreateAccount = (e) => {
+    e.preventDefault();
+    setError(""); 
+
+    if (!name || !email || !password || !industry || !contact) {
+      setError("Please fill out all fields.");
+      return;
+    }
+
+    const signupSuccess = auth.signup({
+      name,
+      industry,
+      email,
+      contact,
+      password,
+    });
+
+    if (signupSuccess) {
+      navigate("/login");
+    } else {
+      setError("An account with this email already exists.");
+    }
   };
 
   return (
@@ -41,7 +78,8 @@ function CreateAccount() {
         >
           Create New Account
         </h2>
-        <form>
+        <form onSubmit={handleCreateAccount}>
+          {error && <div className="alert alert-danger">{error}</div>}
           <div className="mb-3">
             <label className="form-label" style={{ color: "#3265d3ff" }}>
               User Name / Company Name
@@ -51,6 +89,8 @@ function CreateAccount() {
               className="form-control"
               placeholder="Enter your full name"
               style={{ background: "#e3f0ff", borderColor: "#b3c6e0" }}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
 
@@ -63,6 +103,8 @@ function CreateAccount() {
               className="form-control"
               placeholder="e.g., Healthcare, Finance, Software"
               style={{ background: "#e3f0ff", borderColor: "#b3c6e0" }}
+              value={industry}
+              onChange={(e) => setIndustry(e.target.value)}
             />
             <datalist id="industries">
               <option value="Software / IT" />
@@ -83,6 +125,8 @@ function CreateAccount() {
               className="form-control"
               placeholder="e.g., example@email.com"
               style={{ background: "#e3f0ff", borderColor: "#b3c6e0" }}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
@@ -96,6 +140,8 @@ function CreateAccount() {
               placeholder="e.g., 9876543210"
               style={{ background: "#e3f0ff", borderColor: "#b3c6e0" }}
               maxLength={15}
+              value={contact}
+              onChange={(e) => setContact(e.target.value)}
             />
           </div>
 
