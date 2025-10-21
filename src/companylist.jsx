@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import { getReviewsFromStorage, addReviewToStorage } from './storageService';
 import StarRating from './starRating'; 
 import ViewDetailsCard from './viewDetailsCard'; 
+import SidebarNavbar from './SidebarNavbar';
 
 const BASE_COMPANY_DATA = [
 { id: 1, name: 'Smart Solar', description: 'Your trusted partner for sustainable energy. We offer end-to-end solar solutions, from consultation and installation to maintenance.', gmail: 'info@smartsolar.com', phoneNumber: 7596324895 },

@@ -1,72 +1,65 @@
 import { useState } from "react";
 import { Button, Offcanvas, Nav } from "react-bootstrap";
 import { FaBars, FaPlus, FaEdit, FaSignOutAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function SidebarNavbar() {
   const [showSidebar, setShowSidebar] = useState(false);
 
+  const handleClose = () => setShowSidebar(false);
+
   return (
     <>
       <Button
-        style={{
-          backgroundColor: "#0b56c7ff",
-          border: "none",
-          color: "white",
-          display: "flex",
-          alignItems: "center",
-          gap: "8px",
-        }}
-        className="m-2"
+        variant="primary" 
+        className="m-2 d-flex align-items-center gap-2 border-0"
         onClick={() => setShowSidebar(true)}
       >
         <FaBars />
       </Button>
 
-      <Offcanvas
-        show={showSidebar}
-        onHide={() => setShowSidebar(false)}
-        placement="start"
-        //style={{ backgroundColor: "#1767dfff", color: "white" }
-      >
+      <Offcanvas show={showSidebar} onHide={handleClose} placement="start">
         <Offcanvas.Header closeButton closeVariant="white">
-          <Offcanvas.Title style={{ color: "#1767dfff" }}>
+          <Offcanvas.Title className="text-primary">
             Company Actions
           </Offcanvas.Title>
         </Offcanvas.Header>
-        <Offcanvas.Body style={{ backgroundColor: "#1767dfff" }}>
-          <Nav className="flex-column">
+
+        <Offcanvas.Body className="bg-primary">
+          <Nav className="flex-column h-100">
             <Nav.Link
-              href="#"
-              style={{
-                color: "white",
-                display: "flex",
-                alignItems: "center",
-                gap: "10px",
-              }}
+              as={Link}
+              to="/" 
+              onClick={handleClose} 
+              className="text-white d-flex align-items-center gap-2"
+            >
+              <FaEdit /> Home
+            </Nav.Link>
+            <Nav.Link
+              as={Link}
+              to="/register-company"
+              onClick={handleClose} 
+              className="text-white d-flex align-items-center gap-2"
             >
               <FaPlus /> Register Company
             </Nav.Link>
+
             <Nav.Link
-              href="#"
-              style={{
-                color: "white",
-                display: "flex",
-                alignItems: "center",
-                gap: "10px",
-              }}
+              as={Link}
+              to="/company-profile" 
+              onClick={handleClose} 
+              className="text-white d-flex align-items-center gap-2"
             >
-              <FaEdit /> Update Company Details
+              <FaEdit /> My Company Profile
             </Nav.Link>
 
             <Nav.Link
-              href="#"
-              style={{
-                color: "rgba(223, 21, 21, 0.82)",
-                display: "flex",
-                alignItems: "center",
-                gap: "10px",
-                marginTop: "auto",
+              onClick={() => {
+                console.log("Logout logic here");
+                handleClose();
               }}
+              className="text-danger d-flex align-items-center gap-2 mt-auto"
+              style={{ cursor: "pointer" }} 
             >
               <FaSignOutAlt /> Logout
             </Nav.Link>

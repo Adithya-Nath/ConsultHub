@@ -6,7 +6,7 @@ function RegisterCompany() {
     companyDescription: "",
     email: "",
     contactNumber: "",
-    companyLogo: null, // New state for the logo file
+    companyLogo: null, 
   });
 
   const handleChange = (e) => {
@@ -14,28 +14,15 @@ function RegisterCompany() {
   };
 
   const handleFileChange = (e) => {
-    setForm({ ...form, companyLogo: e.target.files[0] }); // Store the selected file object
+    setForm({ ...form, companyLogo: e.target.files[0] });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    // For file uploads, you'd typically use FormData to send it to a server.
+   
     console.log(form);
     alert("Registration form submitted! Check console for data including logo file.");
-    // Example for sending with FormData (uncomment and adapt for your backend)
-    /*
-    const formData = new FormData();
-    for (const key in form) {
-      formData.append(key, form[key]);
-    }
-    fetch('/api/register-company', {
-      method: 'POST',
-      body: formData,
-    }).then(response => response.json())
-      .then(data => console.log(data))
-      .catch(error => console.error('Error:', error));
-    */
+   
   };
 
   const primaryBlue = "#3b82f6";
@@ -98,7 +85,7 @@ function RegisterCompany() {
             />
           </div>
           
-          <div className="mb-3"> {/* Changed from mb-4 to mb-3 for consistent spacing */}
+          <div className="mb-3">
             <label htmlFor="email" className="form-label">
               Company Email ID
             </label>
@@ -131,7 +118,6 @@ function RegisterCompany() {
           </div>
           
 
-          {/* New field for Company Logo */}
           <div className="mb-4">
             <label htmlFor="companyLogo" className="form-label">
               Company Logo (Optional)
@@ -141,7 +127,7 @@ function RegisterCompany() {
               className="form-control"
               id="companyLogo"
               name="companyLogo"
-              accept=".jpg, .jpeg, .png, .gif, .svg, .webp" // Common image formats
+              accept=".jpg, .jpeg, .png, .gif, .svg, .webp" 
               onChange={handleFileChange}
             />
             {form.companyLogo && (

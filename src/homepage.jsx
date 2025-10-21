@@ -1,16 +1,47 @@
-import { useState } from 'react';
+import { useEffect,useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function Homepage() {
     const [searchTerm, setSearchTerm] = useState("");
     const navigate = useNavigate();
+        const [user, setUser] = useState(null);
+
 
     const handleSearch = () => {
         navigate(`/companylist?q=${searchTerm}`);
     };
+    useEffect(() => {
+    const accountData = JSON.parse(localStorage.getItem("accountData"));
+    if (accountData) setUser(accountData);
+    }, []);
+
+    const handleLogout = () => {
+    setUser(null);
+    localStorage.removeItem("accountData");
+    navigate("/login");
+    };
     return (
         <div>
-
+<div
+            className="d-flex justify-content-end align-items-center p-3"
+            style={{ position: "absolute", bottom: "768px", right: "30px", gap: "20px" }}
+            >
+            {user ? (
+                <>
+                <div className="text-end me-2">
+                    <div style={{ fontWeight: 600 }}>{user.name}</div>
+                    <div style={{ fontSize: "0.85rem" }}>{user.email}</div>
+                </div>
+                <button className="btn btn-outline-danger" onClick={handleLogout}>
+                    Logout
+                </button>
+                </>
+            ) : (
+                <button className="btn btn-outline-primary" onClick={() => navigate("/login")}>
+                Login
+                </button>
+            )}
+            </div>
             <div className="container-fluid bg-light text-dark p-5 text-center">
                 <div className="container">
                     <h1 className="display-4 fw-bold text-primary">Welcome to ConsultHub</h1>
@@ -84,15 +115,15 @@ function Homepage() {
                     </div>
                 </section>
             </div>
-            <div class="card text-center">
-                <div class="card-header">
+            <div className="card text-center">
+                <div className="card-header">
                 </div>
-                <div class="card-body">
-                    <h5 class="card-title">The Company Consulting Platform</h5>
-                    <p class="card-text">ConsultHub is an online platform designed to connect users with a wide array of consulting companies. It streamlines the process of finding and evaluating consulting services by providing a centralized directory with detailed company profiles and authentic user feedback. The platform aims to create a transparent and efficient marketplace for clients and consulting firms alike, fostering a trustworthy and dynamic digital community.</p>
-                    <a href="#" class="btn btn-primary">Find Companies</a>
+                <div className="card-body">
+                    <h5 className="card-title">The Company Consulting Platform</h5>
+                    <p className="card-text">ConsultHub is an online platform designed to connect users with a wide array of consulting companies. It streamlines the process of finding and evaluating consulting services by providing a centralized directory with detailed company profiles and authentic user feedback. The platform aims to create a transparent and efficient marketplace for clients and consulting firms alike, fostering a trustworthy and dynamic digital community.</p>
+                    <a href="#" className="btn btn-primary">Find Companies</a>
                 </div>
-                <div class="card-footer text-body-secondary p-3 mb-2 bg-dark-subtle text-dark-emphasis">
+                <div className="card-footer text-body-secondary p-3 mb-2 bg-dark-subtle text-dark-emphasis">
                     @ConsultHub2025
                 </div>
             </div>
