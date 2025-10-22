@@ -8,8 +8,6 @@ import RegisterCompany from "./registerCompany";
 import CompanyProfile from "./CompanyProfile";
 import { AuthProvider } from "./context/AuthContext";
 import AdminDashboard from "./AdminDashboard";
-import AdminSidebar from "./AdminSidebar";
-import AdminApplicationlist from "./AdminApplicationlist";
 import PaymentPage from "./PaymentPage";
 
 function App() {
@@ -72,15 +70,6 @@ function App() {
               <>
                 <SidebarNavbar />
                 <CompanyProfile />
-              </>
-            }
-          />
-          <Route
-            path="/application-list"
-            element={
-              <>
-                <AdminSidebar/>
-                <AdminApplicationlist />
               </>
             }
           />
