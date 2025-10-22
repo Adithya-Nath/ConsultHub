@@ -13,7 +13,7 @@ function AdminDashboard() {
   const [users, setUsers] = useState([]);
   const [applications, setApplications] = useState([]);
   const [approvedCompanies, setApprovedCompanies] = useState([]);
-  
+
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -27,7 +27,7 @@ function AdminDashboard() {
   const refreshData = () => {
     setUsers(JSON.parse(localStorage.getItem(USERS_DB_KEY)) || []);
     setApplications(JSON.parse(localStorage.getItem(APPLICATIONS_DB_KEY)) || []);
-    setApprovedCompanies(JSON.parse(localStorage.getItem(APPROVED_COMPANIES_DB_KEY)) || []);
+    setApprovedCompanies(JSON.parse(localStorage.getItem("companies")) || []);
   };
 
   useEffect(() => {
@@ -41,9 +41,9 @@ function AdminDashboard() {
 
     const updatedApproved = [...approvedCompanies, { ...appToApprove, status: 'approved' }];
     localStorage.setItem(APPROVED_COMPANIES_DB_KEY, JSON.stringify(updatedApproved));
-    
+
     // After approving, reject it from the pending list
-    handleReject(appId); 
+    handleReject(appId);
   };
 
   const handleReject = (appId) => {
@@ -52,9 +52,9 @@ function AdminDashboard() {
     refreshData(); // Refresh all state from localStorage
   };
 
-  const handleDeleteClick = (company) => {
-    setCompanyToDelete(company);
-    setShowDeleteModal(true);
+  const handleDeleteClick = (cmp) => {
+    localStorage.setItem("companies", JSON.stringify(approvedCompanies.filter((comp) => comp.id !== cmp.id)));
+    setApprovedCompanies(JSON.parse(localStorage.getItem("companies")));
   };
 
   const confirmDeleteCompany = () => {
@@ -65,7 +65,7 @@ function AdminDashboard() {
     setCompanyToDelete(null);
     refreshData(); // Refresh state
   };
-  
+
   const handleAddCompany = (e) => {
     e.preventDefault();
     const companyToAdd = { id: Date.now(), status: 'approved', ...newCompany };
@@ -79,7 +79,7 @@ function AdminDashboard() {
   return (
     <div className="d-flex bg-light" style={{ minHeight: '100vh' }}>
       <div className="container-fluid p-4 w-100">
-        
+
         {/* Header Section */}
         <header className="d-flex justify-content-between align-items-center mb-4">
           <h1 className="h2 mb-0">Admin Dashboard</h1>
@@ -106,49 +106,58 @@ function AdminDashboard() {
 
         {/* Tabs Section */}
         <Tabs defaultActiveKey="applications" id="admin-dashboard-tabs" className="mb-3" fill>
-          
-          <Tab eventKey="applications" title={<>📄 Applications <span className="badge bg-primary ms-1">{applications.length}</span></>}>
+
+          <Tab eventKey="applications" title={<>📄 Applications <span className="badge bg-primary ms-1">{approvedCompanies.filter((cmp) => cmp.companyStatus === "pending").length}</span></>}>
             <div className="row mt-3">
-              {applications.length > 0 ? applications.map(app => (
+              {approvedCompanies.filter((cmp) => cmp.companyStatus === "pending").length > 0 ? approvedCompanies.filter((cmp) => cmp.companyStatus === "pending").map(app => (
                 <div key={app.id} className="col-lg-4 col-md-6 mb-4">
-                    <Card className="h-100 shadow-sm">
-                        <Card.Body>
-                            <Card.Title>{app.companyName}</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted">{app.email}</Card.Subtitle>
-                            <Card.Text>{app.companyDescription}</Card.Text>
-                        </Card.Body>
-                        <Card.Footer className="d-flex justify-content-end gap-2 bg-white border-top-0">
-                            <Button variant="outline-success" size="sm" onClick={() => handleApprove(app.id)}>Approve</Button>
-                            <Button variant="outline-danger" size="sm" onClick={() => handleReject(app.id)}>Reject</Button>
-                        </Card.Footer>
-                    </Card>
+                  <Card className="h-100 shadow-sm">
+                    <Card.Body>
+                      <Card.Title>{app.companyName}</Card.Title>
+                      <Card.Subtitle className="mb-2 text-muted">{app.companyEmail}</Card.Subtitle>
+                      <Card.Text>{app.companyDescription}</Card.Text>
+                    </Card.Body>
+                    <Card.Footer className="d-flex justify-content-end gap-2 bg-white border-top-0">
+                      <Button variant="outline-success" size="sm" onClick={() => handleApprove(app.id)}>Approve</Button>
+                      <Button variant="outline-danger" size="sm" onClick={() => handleReject(app.id)}>Reject</Button>
+                    </Card.Footer>
+                  </Card>
                 </div>
               )) : <p className="text-muted p-3">No pending applications.</p>}
             </div>
           </Tab>
 
-          <Tab eventKey="manageCompanies" title={<>🏢 Manage Companies <span className="badge bg-secondary ms-1">{approvedCompanies.length}</span></>}>
-            <div className="d-flex justify-content-end my-3">
-                <Button variant="primary" onClick={() => setShowAddModal(true)}>+ Add New Company</Button>
-            </div>
+          <Tab eventKey="manageCompanies" title={<>🏢 Manage Companies <span className="badge bg-secondary ms-1">{approvedCompanies.filter((cmp) => cmp.companyStatus === "approved").length}</span></>}>
             <Table striped bordered hover responsive>
               <thead>
                 <tr>
-                  <th>Company Name</th>
+                  <th>Logo</th>
+                  <th>Name</th>
+                  <th>Description</th>
                   <th>Email</th>
+                  <th>Phone</th>
+                  <th>Rating</th>
+                  <th>Reviews</th>
                   <th>Status</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {approvedCompanies.map(c => (
-                  <tr key={c.id}>
-                    <td>{c.companyName}</td>
-                    <td>{c.email}</td>
-                    <td><span className="badge bg-success">{c.status}</span></td>
-                    <td><Button variant="danger" size="sm" onClick={() => handleDeleteClick(c)}>Delete</Button></td>
-                  </tr>
-                ))}
+                {approvedCompanies.filter((cmp) => cmp.companyStatus === "approved").map((c) => {
+                  return (
+                    <tr key={c.id}>
+                      <td><h1 className='bi bi-buildings'></h1></td>
+                      <td>{c.companyName}</td>
+                      <td>{c.companyDescription}</td>
+                      <td>{c.companyEmail}</td>
+                      <td>{c.companyPhone}</td>
+                      <td>{c.companyRating}</td>
+                      <td>{c.companyReviews}</td>
+                      <td><span className={c.companyStatus === "approved" ? "badge bg-success" : "badge bg-warning"}>{c.companyStatus}</span></td>
+                      <td><Button variant="danger" size="sm" onClick={() => handleDeleteClick(c)}>Delete</Button></td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </Table>
           </Tab>
@@ -178,9 +187,9 @@ function AdminDashboard() {
         <Modal.Header closeButton><Modal.Title>Add New Company</Modal.Title></Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleAddCompany}>
-            <Form.Group className="mb-3"><Form.Label>Company Name</Form.Label><Form.Control type="text" value={newCompany.companyName} onChange={e => setNewCompany({...newCompany, companyName: e.target.value})} required /></Form.Group>
-            <Form.Group className="mb-3"><Form.Label>Company Description</Form.Label><Form.Control as="textarea" rows={3} value={newCompany.companyDescription} onChange={e => setNewCompany({...newCompany, companyDescription: e.target.value})} required /></Form.Group>
-            <Form.Group className="mb-3"><Form.Label>Email</Form.Label><Form.Control type="email" value={newCompany.email} onChange={e => setNewCompany({...newCompany, email: e.target.value})} required /></Form.Group>
+            <Form.Group className="mb-3"><Form.Label>Company Name</Form.Label><Form.Control type="text" value={newCompany.companyName} onChange={e => setNewCompany({ ...newCompany, companyName: e.target.value })} required /></Form.Group>
+            <Form.Group className="mb-3"><Form.Label>Company Description</Form.Label><Form.Control as="textarea" rows={3} value={newCompany.companyDescription} onChange={e => setNewCompany({ ...newCompany, companyDescription: e.target.value })} required /></Form.Group>
+            <Form.Group className="mb-3"><Form.Label>Email</Form.Label><Form.Control type="email" value={newCompany.email} onChange={e => setNewCompany({ ...newCompany, email: e.target.value })} required /></Form.Group>
             <Button variant="primary" type="submit">Add Company</Button>
           </Form>
         </Modal.Body>

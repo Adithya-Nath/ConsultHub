@@ -14,75 +14,75 @@ function App() {
   return (
     <>
       <BrowserRouter>
-      <AuthProvider>
-        <Routes>
-          <Route path="/companylist" element={ 
-            <>
-            <SidebarNavbar />
-          <Companylist />
-          </>
-        } />
-          <Route
-            path="/"
-            element={
+        <AuthProvider>
+          <Routes>
+            <Route path="/companylist" element={
               <>
                 <SidebarNavbar />
-                <Homepage />
+                <Companylist />
               </>
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              <>
-                <LoginPage />
-              </>
-            }
-          />
-          <Route
-            path="/create-account"
-            element={
-              <>
-                <CreateAccount />
-              </>
-            }
-          />
-          <Route
-            path="/register-company"
-            element={
-              <>
-              <SidebarNavbar />
-                <RegisterCompany />
-              </>
-            }
-          />
-          <Route
-            path="/admin-dashboard"
-            element={
-              <>
-                <AdminDashboard />
-              </>
-            }
-          />
-          <Route
-            path="/company-profile"
-            element={
-              <>
-                <SidebarNavbar />
-                <CompanyProfile />
-              </>
-            }
-          />
-          <Route
-            path="/payment-page"
-            element={
-              <>
-                <SidebarNavbar/>
-                <PaymentPage />
-              </>
-            }
-          />
-        </Routes>
+            } />
+            <Route
+              path="/"
+              element={
+                <>
+                  <SidebarNavbar />
+                  <Homepage />
+                </>
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                <>
+                  <LoginPage />
+                </>
+              }
+            />
+            <Route
+              path="/create-account"
+              element={
+                <>
+                  <CreateAccount />
+                </>
+              }
+            />
+            <Route
+              path="/register-company"
+              element={
+                <>
+                  <SidebarNavbar />
+                  <RegisterCompany />
+                </>
+              }
+            />
+            <Route
+              path="/admin-dashboard"
+              element={
+                <>
+                  <AdminDashboard />
+                </>
+              }
+            />
+            <Route
+              path="/company-profile"
+              element={
+                <>
+                  <SidebarNavbar />
+                  <CompanyProfile />
+                </>
+              }
+            />
+            <Route
+              path="/payment-page"
+              element={
+                <>
+                  <SidebarNavbar />
+                  <PaymentPage />
+                </>
+              }
+            />
+          </Routes>
         </AuthProvider>
       </BrowserRouter>
     </>
