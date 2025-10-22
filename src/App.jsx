@@ -62,7 +62,6 @@ function App() {
             path="/admin-dashboard"
             element={
               <>
-              <AdminSidebar />
                 <AdminDashboard />
               </>
             }
