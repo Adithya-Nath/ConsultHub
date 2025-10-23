@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Tabs, Tab, Table, Button, Card, Modal, Form, Dropdown } from 'react-bootstrap';
+import { Tabs, Tab, Table, Button, Card, Modal, Dropdown } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
-import SidebarNavbar from './SidebarNavbar.jsx';
 
-// Define localStorage keys for our "databases"
+// --- LocalStorage keys ---
 const USERS_DB_KEY = 'usersDB';
 const APPLICATIONS_DB_KEY = 'companyApplicationsDB';
 const APPROVED_COMPANIES_DB_KEY = 'approvedCompaniesDB';
@@ -17,17 +16,13 @@ function AdminDashboard() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
-  // State for modals
-  const [showAddModal, setShowAddModal] = useState(false);
-  const [newCompany, setNewCompany] = useState({ companyName: '', companyDescription: '', email: '' });
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [companyToDelete, setCompanyToDelete] = useState(null);
 
-  // --- Data Management ---
   const refreshData = () => {
     setUsers(JSON.parse(localStorage.getItem(USERS_DB_KEY)) || []);
     setApplications(JSON.parse(localStorage.getItem(APPLICATIONS_DB_KEY)) || []);
-    setApprovedCompanies(JSON.parse(localStorage.getItem("companies")) || []);
+    setApprovedCompanies(JSON.parse(localStorage.getItem(APPROVED_COMPANIES_DB_KEY)) || []);
   };
 
   useEffect(() => {
@@ -39,22 +34,21 @@ function AdminDashboard() {
     const appToApprove = applications.find(app => app.id === appId);
     if (!appToApprove) return;
 
-    const updatedApproved = [...approvedCompanies, { ...appToApprove, status: 'approved' }];
+    const updatedApproved = [...approvedCompanies, { ...appToApprove, companyStatus: "approved" }];
     localStorage.setItem(APPROVED_COMPANIES_DB_KEY, JSON.stringify(updatedApproved));
 
-    // After approving, reject it from the pending list
-    handleReject(appId);
+    handleReject(appId); // remove from pending
   };
 
   const handleReject = (appId) => {
     const updatedApplications = applications.filter(app => app.id !== appId);
     localStorage.setItem(APPLICATIONS_DB_KEY, JSON.stringify(updatedApplications));
-    refreshData(); // Refresh all state from localStorage
+    refreshData();
   };
 
   const handleDeleteClick = (cmp) => {
-    localStorage.setItem("companies", JSON.stringify(approvedCompanies.filter((comp) => comp.id !== cmp.id)));
-    setApprovedCompanies(JSON.parse(localStorage.getItem("companies")));
+    setCompanyToDelete(cmp);
+    setShowDeleteModal(true);
   };
 
   const confirmDeleteCompany = () => {
@@ -63,24 +57,13 @@ function AdminDashboard() {
     localStorage.setItem(APPROVED_COMPANIES_DB_KEY, JSON.stringify(updatedCompanies));
     setShowDeleteModal(false);
     setCompanyToDelete(null);
-    refreshData(); // Refresh state
-  };
-
-  const handleAddCompany = (e) => {
-    e.preventDefault();
-    const companyToAdd = { id: Date.now(), status: 'approved', ...newCompany };
-    const updatedCompanies = [...approvedCompanies, companyToAdd];
-    localStorage.setItem(APPROVED_COMPANIES_DB_KEY, JSON.stringify(updatedCompanies));
-    setShowAddModal(false);
-    setNewCompany({ companyName: '', companyDescription: '', email: '' });
-    refreshData(); // Refresh state
+    refreshData();
   };
 
   return (
     <div className="d-flex bg-light" style={{ minHeight: '100vh' }}>
       <div className="container-fluid p-4 w-100">
-
-        {/* Header Section */}
+        {/* Header */}
         <header className="d-flex justify-content-between align-items-center mb-4">
           <h1 className="h2 mb-0">Admin Dashboard</h1>
           {user ? (
@@ -94,9 +77,7 @@ function AdminDashboard() {
                   <div className="text-muted small">{user.email}</div>
                 </Dropdown.Header>
                 <Dropdown.Divider />
-                <Dropdown.Item onClick={logout} className="text-danger">
-                  <i className="bi bi-box-arrow-right me-2"></i>Logout
-                </Dropdown.Item>
+                <Dropdown.Item onClick={logout} className="text-danger">Logout</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           ) : (
@@ -104,12 +85,12 @@ function AdminDashboard() {
           )}
         </header>
 
-        {/* Tabs Section */}
+        {/* Tabs */}
         <Tabs defaultActiveKey="applications" id="admin-dashboard-tabs" className="mb-3" fill>
-
-          <Tab eventKey="applications" title={<>📄 Applications <span className="badge bg-primary ms-1">{approvedCompanies.filter((cmp) => cmp.companyStatus === "pending").length}</span></>}>
+          {/* Applications Tab */}
+          <Tab eventKey="applications" title={`📄 Applications (${applications.length})`}>
             <div className="row mt-3">
-              {approvedCompanies.filter((cmp) => cmp.companyStatus === "pending").length > 0 ? approvedCompanies.filter((cmp) => cmp.companyStatus === "pending").map(app => (
+              {applications.length > 0 ? applications.map(app => (
                 <div key={app.id} className="col-lg-4 col-md-6 mb-4">
                   <Card className="h-100 shadow-sm">
                     <Card.Body>
@@ -127,7 +108,8 @@ function AdminDashboard() {
             </div>
           </Tab>
 
-          <Tab eventKey="manageCompanies" title={<>🏢 Manage Companies <span className="badge bg-secondary ms-1">{approvedCompanies.filter((cmp) => cmp.companyStatus === "approved").length}</span></>}>
+          {/* Manage Companies */}
+          <Tab eventKey="manageCompanies" title={`🏢 Manage Companies (${approvedCompanies.length})`}>
             <Table striped bordered hover responsive>
               <thead>
                 <tr>
@@ -136,37 +118,30 @@ function AdminDashboard() {
                   <th>Description</th>
                   <th>Email</th>
                   <th>Phone</th>
-                  <th>Rating</th>
-                  <th>Reviews</th>
                   <th>Status</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {approvedCompanies.filter((cmp) => cmp.companyStatus === "approved").map((c) => {
-                  return (
-                    <tr key={c.id}>
-                      <td><h1 className='bi bi-buildings'></h1></td>
-                      <td>{c.companyName}</td>
-                      <td>{c.companyDescription}</td>
-                      <td>{c.companyEmail}</td>
-                      <td>{c.companyPhone}</td>
-                      <td>{c.companyRating}</td>
-                      <td>{c.companyReviews}</td>
-                      <td><span className={c.companyStatus === "approved" ? "badge bg-success" : "badge bg-warning"}>{c.companyStatus}</span></td>
-                      <td><Button variant="danger" size="sm" onClick={() => handleDeleteClick(c)}>Delete</Button></td>
-                    </tr>
-                  );
-                })}
+                {approvedCompanies.map(c => (
+                  <tr key={c.id}>
+                    <td>{c.companyLogo ? <img src={c.companyLogo} alt="Logo" height={50} /> : <h1 className='bi bi-buildings'></h1>}</td>
+                    <td>{c.companyName}</td>
+                    <td>{c.companyDescription}</td>
+                    <td>{c.companyEmail}</td>
+                    <td>{c.companyPhone}</td>
+                    <td><span className="badge bg-success">{c.companyStatus}</span></td>
+                    <td><Button variant="danger" size="sm" onClick={() => handleDeleteClick(c)}>Delete</Button></td>
+                  </tr>
+                ))}
               </tbody>
             </Table>
           </Tab>
 
-          <Tab eventKey="users" title={<>👥 User Accounts <span className="badge bg-secondary ms-1">{users.length}</span></>}>
+          {/* Users Tab */}
+          <Tab eventKey="users" title={`👥 Users (${users.length})`}>
             <Table striped bordered hover responsive className="mt-3">
-              <thead>
-                <tr><th>#</th><th>Name</th><th>Email</th><th>Role</th></tr>
-              </thead>
+              <thead><tr><th>#</th><th>Name</th><th>Email</th><th>Role</th></tr></thead>
               <tbody>
                 {users.map((u, index) => (
                   <tr key={u.id}>
@@ -182,19 +157,6 @@ function AdminDashboard() {
         </Tabs>
       </div>
 
-      {/* Add Company Modal */}
-      <Modal show={showAddModal} onHide={() => setShowAddModal(false)}>
-        <Modal.Header closeButton><Modal.Title>Add New Company</Modal.Title></Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={handleAddCompany}>
-            <Form.Group className="mb-3"><Form.Label>Company Name</Form.Label><Form.Control type="text" value={newCompany.companyName} onChange={e => setNewCompany({ ...newCompany, companyName: e.target.value })} required /></Form.Group>
-            <Form.Group className="mb-3"><Form.Label>Company Description</Form.Label><Form.Control as="textarea" rows={3} value={newCompany.companyDescription} onChange={e => setNewCompany({ ...newCompany, companyDescription: e.target.value })} required /></Form.Group>
-            <Form.Group className="mb-3"><Form.Label>Email</Form.Label><Form.Control type="email" value={newCompany.email} onChange={e => setNewCompany({ ...newCompany, email: e.target.value })} required /></Form.Group>
-            <Button variant="primary" type="submit">Add Company</Button>
-          </Form>
-        </Modal.Body>
-      </Modal>
-
       {/* Delete Confirmation Modal */}
       <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
         <Modal.Header closeButton><Modal.Title>Confirm Deletion</Modal.Title></Modal.Header>
@@ -204,10 +166,8 @@ function AdminDashboard() {
           <Button variant="danger" onClick={confirmDeleteCompany}>Delete Company</Button>
         </Modal.Footer>
       </Modal>
-
     </div>
   );
 }
 
 export default AdminDashboard;
-
